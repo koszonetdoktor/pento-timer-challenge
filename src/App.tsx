@@ -1,26 +1,29 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+/** @jsxImportSource @emotion/react */
+import { css, Global } from "@emotion/react"
+import { colors } from "./styles"
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <div css={styles.root}>
+            <Global styles={styles.body} />
+            <h1>HEllo</h1>
+        </div>
+    )
 }
 
-export default App;
+export default App
+
+const styles = {
+    body: css`
+        body {
+            font-family: "Source Sans Pro", "sans-serif";
+            background-color: #d9e2ec;
+            margin: 0;
+        }
+    `,
+    root: css`
+        max-width: 600px;
+        margin: auto;
+        background-color: white;
+    `,
+}
