@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from "react"
 import Timer from "./Timer"
 import Saver from "./Saver"
-import { Tracking } from "../types"
+import { ProgressStates, Tracking } from "../types"
 import { saveTracking } from "../services/trackingService"
 
 type Props = {
@@ -10,9 +10,13 @@ type Props = {
 
 export default function TimeRecorder({ onRecorded }: Props) {
     const [measuredTime, setMeasuredTime] = useState<number>(0)
+    const [savingProgress, setSavingProgress] = useState<ProgressStates>(
+        "ideal"
+    )
 
     const handleSave = async (name: string) => {
         try {
+            setSavingProgress("loading")
             const { id, ts } = await saveTracking(name, measuredTime)
             onRecorded({
                 name,
@@ -20,8 +24,9 @@ export default function TimeRecorder({ onRecorded }: Props) {
                 id: `${Math.random()}`, //TODO from backend
                 ts: Date.now(), //TODO from backend
             })
-        } catch (err) {
-            alert("RROR")
+            setSavingProgress("ideal")
+        } catch {
+            setSavingProgress("error")
         }
     }
 
@@ -31,7 +36,11 @@ export default function TimeRecorder({ onRecorded }: Props) {
                 value={measuredTime}
                 onChange={(value: number) => setMeasuredTime(value)}
             />
-            <Saver disabled={measuredTime === 0} onSaved={handleSave} />
+            <Saver
+                disabled={measuredTime === 0}
+                savingProgress={savingProgress}
+                onSave={handleSave}
+            />
         </Fragment>
     )
 }

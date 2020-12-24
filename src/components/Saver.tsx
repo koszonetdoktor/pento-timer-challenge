@@ -2,20 +2,22 @@
 
 import { css } from "@emotion/react"
 import { useState } from "react"
-import { sizes } from "../styles"
+import { sizes, colors } from "../styles"
+import { ProgressStates } from "../types"
 import Button from "./Button"
 import Input from "./Input"
 
 type Props = {
     disabled: boolean
-    onSaved: (name: string) => void
+    savingProgress: ProgressStates
+    onSave: (name: string) => void
 }
 
-export default function Saver({ disabled, onSaved }: Props) {
+export default function Saver({ disabled, savingProgress, onSave }: Props) {
     const [name, setName] = useState("")
 
     const handleSaveClick = () => {
-        onSaved(name)
+        onSave(name)
         setName("")
     }
 
@@ -28,8 +30,11 @@ export default function Saver({ disabled, onSaved }: Props) {
                 css={styles.input}
             />
             <Button disabled={disabled} onClick={handleSaveClick}>
-                Save
+                {savingProgress === "loading" ? "Save..." : "Save"}
             </Button>
+            {savingProgress === "error" && (
+                <span css={styles.error}>Could not save</span>
+            )}
         </div>
     )
 }
@@ -44,5 +49,9 @@ const styles = {
     input: css`
         width: 90%;
         margin-bottom: ${sizes.space.s};
+    `,
+    error: css`
+        padding-top: ${sizes.space.s};
+        color: ${colors.error};
     `,
 }

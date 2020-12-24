@@ -11,7 +11,7 @@ type Props = {
 
 export default function TrackedTimeList({ trackings }: Props) {
     return (
-        <div>
+        <div css={styles.root}>
             <ul css={styles.list}>
                 <li key="header" css={[styles.listItem, styles.header]}>
                     <span css={styles.cell.base}>Name</span>
@@ -37,9 +37,15 @@ export default function TrackedTimeList({ trackings }: Props) {
 }
 
 const styles = {
+    root: css`
+        padding: ${sizes.space.m} ${sizes.space.m};
+        height: 35vh;
+        overflow-x: scroll;
+    `,
     list: css`
         padding: 0;
         list-style: none;
+        margin: 0;
         & li:nth-of-type(even) {
             background: ${colors.gray[900]};
         }
@@ -47,6 +53,7 @@ const styles = {
     listItem: css`
         display: flex;
         justify-content: space-around;
+        align-items: center;
         padding: ${sizes.space.s} 0;
         border-radius: 5px;
     `,

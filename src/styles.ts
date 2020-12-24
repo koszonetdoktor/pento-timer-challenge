@@ -9,6 +9,7 @@ export const colors = {
         900: "#243B53",
         1000: "#102A43",
     },
+    error: "#E66A6A",
     text: {
         main: "#54D1DB",
     },

@@ -70,7 +70,7 @@ const styles = {
     timing: css`
         font-size: ${sizes.font.xxl};
         text-align: center;
-        padding: ${sizes.space.l} 0;
+        padding: ${sizes.space.m} 0;
     `,
     button: css`
         margin: 0 ${sizes.space.m};
