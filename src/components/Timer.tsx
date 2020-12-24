@@ -3,11 +3,16 @@
 import { css } from "@emotion/react"
 import { useEffect, useState } from "react"
 import { sizes } from "../styles"
-import { addLeadingZero } from "../utils"
+import { formatTime } from "../utils"
 import Button from "./Button"
 
-export default function Timer() {
-    const [time, setTime] = useState<number>(0)
+type Props = {
+    value: number
+    onChange: (value: number) => void
+}
+
+export default function Timer({ value, onChange }: Props) {
+    const [time, setTime] = useState(0)
     const [counter, setCounter] = useState<NodeJS.Timeout | null>(null)
 
     useEffect(
@@ -24,6 +29,7 @@ export default function Timer() {
         if (counter !== null) {
             clearInterval(counter)
             setCounter(null)
+            onChange(time)
         } else {
             const ref = setInterval(() => {
                 setTime((currentTime) => currentTime + 1)
@@ -34,24 +40,19 @@ export default function Timer() {
 
     const handleReset = () => {
         setTime(0)
+        onChange(0)
     }
-
-    const hour = Math.floor(time / 60 / 60)
-    const min = Math.floor(time / 60) - 60 * hour
-    const sec = time - min * 60 - hour * 60 * 60
 
     return (
         <div css={styles.root}>
-            <div css={styles.timing}>{`${addLeadingZero(
-                hour
-            )} : ${addLeadingZero(min)} : ${addLeadingZero(sec)}`}</div>
+            <div css={styles.timing}>{formatTime(time)}</div>
             <div css={styles.actionsContainer}>
                 <Button onClick={handleStartStop} css={styles.button}>
                     {counter ? "Stop" : "Start"}
                 </Button>
                 <Button
                     onClick={handleReset}
-                    disabled={time !== 0 && counter !== null}
+                    disabled={value === 0 || counter !== null}
                     css={styles.button}
                 >
                     Reset

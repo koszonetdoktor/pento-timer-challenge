@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css, Global } from "@emotion/react"
-import Timer from "./components/Timer"
+import TimeMeasure from "./components/TimeMeasure"
 import { colors, sizes } from "./styles"
 
 function App() {
@@ -8,7 +8,7 @@ function App() {
         <div css={styles.root}>
             <Global styles={styles.body} />
             <h1>Freelancer TimeTracker</h1>
-            <Timer />
+            <TimeMeasure onRecord={(name, time) => console.log(name, time)} />
         </div>
     )
 }

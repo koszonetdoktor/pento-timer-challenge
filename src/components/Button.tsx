@@ -37,6 +37,7 @@ const styles = {
         font-weight: 600;
         transition: all 0.2s ease;
         transition-property: color, background-color;
+        border-radius: 2rem;
         &:focus {
             outline: none;
         }
