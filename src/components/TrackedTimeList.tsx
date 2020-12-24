@@ -1,17 +1,25 @@
 /** @jsxImportSource @emotion/react */
 
 import { css } from "@emotion/react"
+import { useState } from "react"
 import { colors, sizes } from "../styles"
 import { Tracking } from "../types"
 import { formatDate, formatReadableTime } from "../utils"
+import PeriodFilter, { Period } from "./PeriodFilter"
 
 type Props = {
     trackings: Tracking[]
 }
 
 export default function TrackedTimeList({ trackings }: Props) {
+    const [selectedPeriod, setSelectedPeriod] = useState<Period>("day")
+
     return (
         <div css={styles.root}>
+            <PeriodFilter
+                onChange={(period) => setSelectedPeriod(period)}
+                value={selectedPeriod}
+            />
             <ul css={styles.list}>
                 <li key="header" css={[styles.listItem, styles.header]}>
                     <span css={styles.cell.base}>Name</span>
@@ -38,7 +46,7 @@ export default function TrackedTimeList({ trackings }: Props) {
 
 const styles = {
     root: css`
-        padding: ${sizes.space.m} ${sizes.space.m};
+        padding: 0 ${sizes.space.m};
         height: 35vh;
         overflow-x: scroll;
     `,
