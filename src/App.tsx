@@ -2,7 +2,7 @@
 import { css, Global } from "@emotion/react"
 import { Fragment } from "react"
 import Loading from "./components/Loading"
-import TimeMeasure from "./components/TimeMeasure"
+import TimeRecorder from "./components/TimeRecorder"
 import TrackedTimeList from "./components/TrackedTimeList"
 import { useTrackings } from "./services/useTrackings"
 import { colors, sizes } from "./styles"
@@ -20,8 +20,8 @@ function App() {
                 <Loading />
             ) : (
                 <Fragment>
-                    <TimeMeasure
-                        onRecord={(name, time) => console.log(name, time)}
+                    <TimeRecorder
+                        onRecorded={(newTracking) => addTracking(newTracking)}
                     />
                     <TrackedTimeList trackings={trackings} />
                 </Fragment>
