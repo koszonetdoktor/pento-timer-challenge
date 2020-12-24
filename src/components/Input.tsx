@@ -26,7 +26,7 @@ export default function Input({ value, className, disabled, onChange }: Props) {
 const styles = {
     root: css`
         border: 1px solid ${colors.primary.light};
-        background: ${colors.gray.dark};
+        background: ${colors.gray[1000]};
         border-radius: 2rem;
         color: ${colors.primary.light};
         font-size: ${sizes.font.m};
@@ -35,7 +35,7 @@ const styles = {
         padding: ${sizes.space.xs};
     `,
     disabled: css`
-        border-color: ${colors.gray.main};
+        border-color: ${colors.gray[500]};
         &:hover {
             cursor: default;
         }

@@ -36,7 +36,7 @@ const styles = {
     body: css`
         body {
             font-family: "Source Sans Pro", "sans-serif";
-            background-color: ${colors.gray.dark};
+            background-color: ${colors.gray[1000]};
             margin: 0;
             color: ${colors.text.main};
         }

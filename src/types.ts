@@ -2,5 +2,5 @@ export type Tracking = {
     id: string
     name: string
     duration: number
-    ts: Date
+    ts: number
 }

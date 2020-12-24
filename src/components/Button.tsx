@@ -47,10 +47,10 @@ const styles = {
         }
     `,
     disabled: css`
-        background-color: ${colors.gray.main};
+        background-color: ${colors.gray[500]};
         &:hover {
             cursor: default;
-            background-color: ${colors.gray.main};
+            background-color: ${colors.gray[500]};
         }
     `,
 }

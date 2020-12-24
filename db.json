@@ -1,24 +1,28 @@
 {
     "trackings": [
         {
+            "name": "Uber",
             "id": "1",
-            "duration": 3455,
-            "ts": 12331
+            "duration": 345,
+            "ts": 1606389238970
         },
         {
+            "name": "Airbnb",
             "id": "2",
-            "duration": 3455,
-            "ts": 12311
+            "duration": 33455,
+            "ts": 1605861771410
         },
         {
+            "name": "Twitter",
             "id": "3",
-            "duration": 3455,
-            "ts": 1221431
+            "duration": 35,
+            "ts": 1606990975870
         },
         {
+            "name": "Basecamp",
             "id": "4",
             "duration": 3455,
-            "ts": 23442
+            "ts": 1605861763190
         }
     ]
 }
