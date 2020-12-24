@@ -33,7 +33,7 @@ export default function Timer({ value, onChange }: Props) {
         } else {
             const ref = setInterval(() => {
                 setTime((currentTime) => currentTime + 1)
-            }, 10)
+            }, 1000)
             setCounter(ref)
         }
     }

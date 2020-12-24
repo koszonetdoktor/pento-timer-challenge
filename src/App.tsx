@@ -1,14 +1,31 @@
 /** @jsxImportSource @emotion/react */
 import { css, Global } from "@emotion/react"
+import { Fragment } from "react"
+import Loading from "./components/Loading"
 import TimeMeasure from "./components/TimeMeasure"
+import TrackedTimeList from "./components/TrackedTimeList"
+import { useTrackings } from "./services/useTrackings"
 import { colors, sizes } from "./styles"
 
 function App() {
+    const { trackings, loading, error, addTracking } = useTrackings()
+
+    if (error) throw error
+
     return (
         <div css={styles.root}>
             <Global styles={styles.body} />
             <h1>Freelancer TimeTracker</h1>
-            <TimeMeasure onRecord={(name, time) => console.log(name, time)} />
+            {loading ? (
+                <Loading />
+            ) : (
+                <Fragment>
+                    <TimeMeasure
+                        onRecord={(name, time) => console.log(name, time)}
+                    />
+                    <TrackedTimeList trackings={trackings} />
+                </Fragment>
+            )}
         </div>
     )
 }
