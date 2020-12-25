@@ -33,13 +33,14 @@ let port = process.env.PORT || 3001
 
     instance
         .register(fastifyStatic, {
-            root: path.join(__dirname, "../../ui/public"),
+            root: path.join(__dirname, "../../ui/build"),
+            wildcard: false,
         })
         .register(trackingsPlugin)
         .register(fastifyBasicAuth, { validate, authenticate: true })
         .after(() => {
             instance.addHook("preHandler", instance.basicAuth)
-            instance.get("/", (_, reply) => {
+            instance.get("/*", (_, reply) => {
                 reply.sendFile("index.html")
             })
         })
