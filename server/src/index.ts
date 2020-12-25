@@ -29,7 +29,7 @@ let port = process.env.PORT || 3001
 ;(async () => {
     config()
 
-    //TODO fauna
+    //TODO fauna init
 
     instance
         .register(fastifyStatic, {

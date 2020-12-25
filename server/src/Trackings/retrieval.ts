@@ -1,6 +1,4 @@
 import { FastifyReply, FastifyRequest } from "fastify"
-import { RouteGenericInterface } from "fastify/types/route"
-import { IncomingMessage, Server, ServerResponse } from "http"
 
 export const retrievalHandler = async (
     request: FastifyRequest,

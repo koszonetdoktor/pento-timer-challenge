@@ -1,6 +1,8 @@
 import { FastifyError, FastifyInstance } from "fastify"
 import { IncomingMessage, Server, ServerResponse } from "http"
 import { retrievalHandler } from "./retrieval"
+import creationSchema from "./creation.body.schema.json"
+import { creationHandler } from "./creation"
 
 type PluginOptions = {}
 
@@ -12,5 +14,10 @@ export const plugin = (
     next: FPluginCb
 ): void => {
     fastify.get("/trackings", retrievalHandler)
+    fastify.post(
+        "/trackings",
+        { schema: { body: creationSchema } },
+        creationHandler
+    )
     next()
 }

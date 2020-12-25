@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react"
 import { Tracking } from "../types"
+import axios from "axios"
 
 export function useTrackings(): {
     trackings: Tracking[]
@@ -16,13 +17,8 @@ export function useTrackings(): {
         isMounted.current = true
         async function init() {
             try {
-                const response = await fetch("/trackings")
-                if (response.ok) {
-                    const json = await response.json()
-                    if (isMounted.current) setTrackings(json)
-                } else {
-                    throw response
-                }
+                const response = await axios.get("/trackings")
+                if (isMounted.current) setTrackings(response.data)
             } catch (err) {
                 if (isMounted.current) setError(err)
             } finally {

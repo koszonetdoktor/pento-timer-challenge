@@ -1,0 +1,24 @@
+{
+    "definitions": {},
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "trackings:creation#body",
+    "type": "object",
+    "title": "Schema for creating trackings",
+    "required": ["name", "duration"],
+    "additionalProperties": false,
+    "properties": {
+        "name": {
+            "$id": "#/properties/name",
+            "type": "string",
+            "minLength": 1,
+            "title": "Name of the tracking",
+            "examples": ["Danish company", "English company"]
+        },
+        "duration": {
+            "$id": "#/properties/duration",
+            "type": "number",
+            "title": "Duration of the tracking in seconds",
+            "examples": [1245, 900]
+        }
+    }
+}
