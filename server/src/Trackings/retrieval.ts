@@ -15,7 +15,7 @@ export const retrievalHandler = async (
         if (opts.user === undefined) {
             return reply.code(400).send({ error: "User could not be found!" })
         }
-        const response: ResponseData[] = await opts.dbClient.query(
+        const response: { data: ResponseData[] } = await opts.dbClient.query(
             q.Let(
                 {
                     user: q.Get(q.Match(q.Index("users_by_email"), opts.user)),
@@ -26,7 +26,7 @@ export const retrievalHandler = async (
                 },
                 q.If(
                     q.IsEmpty(q.Var("trackingSet")),
-                    [],
+                    { data: [] },
                     q.Reverse(
                         q.Map(
                             q.Paginate(q.Var("trackingSet")),
@@ -60,7 +60,7 @@ export const retrievalHandler = async (
                 )
             )
         )
-        return reply.code(200).send(response)
+        return reply.code(200).send(response.data)
     } catch (err) {
         console.error(err)
         return reply

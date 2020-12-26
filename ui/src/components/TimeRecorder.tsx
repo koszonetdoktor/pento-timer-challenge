@@ -21,8 +21,8 @@ export default function TimeRecorder({ onRecorded }: Props) {
             onRecorded({
                 name,
                 duration: measuredTime,
-                id: `${Math.random()}`, //TODO from backend
-                ts: Date.now(), //TODO from backend
+                id,
+                ts,
             })
             setSavingProgress("ideal")
         } catch {

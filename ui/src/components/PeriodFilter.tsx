@@ -14,8 +14,8 @@ type Props = {
 export default function PeriodFilter({ value, onChange }: Props) {
     const periods: { period: Period; label: string }[] = [
         { period: "day", label: "Today" },
-        { period: "month", label: "This week" },
-        { period: "week", label: "This month" },
+        { period: "week", label: "This week" },
+        { period: "month", label: "This month" },
     ]
 
     const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {

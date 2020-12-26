@@ -55,5 +55,6 @@ let port = process.env.PORT || 3001
             })
         })
 
+    console.log(`server is listening on port: ${port}`)
     await instance.listen(port)
 })()
