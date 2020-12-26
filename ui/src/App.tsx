@@ -3,7 +3,7 @@ import { css, Global } from "@emotion/react"
 import { Fragment } from "react"
 import Loading from "./components/Loading"
 import TimeRecorder from "./components/TimeRecorder"
-import TrackedTimeList from "./components/TrackedTimeList"
+import TrackedTimeList from "./components/TrackedTimeList/TrackedTimeList"
 import { useTrackings } from "./services/useTrackings"
 import { colors, sizes } from "./styles"
 

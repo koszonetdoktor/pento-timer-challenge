@@ -23,7 +23,12 @@ export default function PeriodFilter({ value, onChange }: Props) {
     }
 
     return (
-        <select onChange={handleChange} value={value} css={styles.root}>
+        <select
+            onChange={handleChange}
+            value={value}
+            css={styles.root}
+            data-testid="selector_period"
+        >
             {periods.map((p) => (
                 <option value={p.period} key={p.label}>
                     {p.label}
