@@ -22,7 +22,6 @@ const styles = {
         border-top: 8px solid ${colors.primary.dark};
         width: 80px;
         height: 80px;
-        -webkit-animation: spin 2s linear infinite; /* Safari */
         animation: spin 1s linear infinite;
 
         @keyframes spin {

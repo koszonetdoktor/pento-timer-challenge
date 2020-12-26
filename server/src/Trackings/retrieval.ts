@@ -1,38 +1,70 @@
 import { FastifyReply, FastifyRequest } from "fastify"
-import { PluginOptions } from "./types"
+import { PluginOptions, TrackingData } from "./types"
+import faunadb from "faunadb"
+
+const q = faunadb.query
+
+type ResponseData = Omit<TrackingData, "userRef"> & { id: string; ts: number }
 
 export const retrievalHandler = async (
     request: FastifyRequest,
     reply: FastifyReply,
     opts: PluginOptions
 ): Promise<FastifyReply> => {
-    console.log("header", request.headers)
-    console.log("trackings!")
-
-    return reply.code(200).send([
-        {
-            name: "Uber",
-            id: "1",
-            duration: 345,
-            ts: 1606389238970,
-        },
-        {
-            name: "Airbnb",
-            id: "2",
-            duration: 33455,
-            ts: 1605861771410,
-        },
-        {
-            name: "Twitter23",
-            id: "3",
-            duration: 35,
-            ts: 1606990975870,
-        },
-        {
-            name: "Basecamp",
-            id: "4",
-            duration: 3455,
-            ts: 1605861763190,
-        },
-    ])
+    try {
+        if (opts.user === undefined) {
+            return reply.code(400).send({ error: "User could not be found!" })
+        }
+        const response: { data: ResponseData[] } = await opts.dbClient.query(
+            q.Let(
+                {
+                    user: q.Get(q.Match(q.Index("users_by_email"), opts.user)),
+                    trackingSet: q.Match(
+                        q.Index("trackings_by_userRef"),
+                        q.Select("ref", q.Var("user"))
+                    ),
+                },
+                q.If(
+                    q.IsEmpty(q.Var("trackingSet")),
+                    [],
+                    q.Reverse(
+                        q.Map(
+                            q.Paginate(q.Var("trackingSet")),
+                            q.Lambda(
+                                "trackingRef",
+                                q.Let(
+                                    {
+                                        tracking: q.Get(q.Var("trackingRef")),
+                                    },
+                                    {
+                                        id: q.Select(
+                                            ["ref", "id"],
+                                            q.Var("tracking")
+                                        ),
+                                        ts: q.ToMillis(
+                                            q.Select("ts", q.Var("tracking"))
+                                        ),
+                                        name: q.Select(
+                                            ["data", "name"],
+                                            q.Var("tracking")
+                                        ),
+                                        duration: q.Select(
+                                            ["data", "duration"],
+                                            q.Var("tracking")
+                                        ),
+                                    }
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        )
+        return reply.code(200).send(response.data)
+    } catch (err) {
+        console.error(err)
+        return reply
+            .send(400)
+            .send({ error: "Tracking could not be retrieved!" })
+    }
 }

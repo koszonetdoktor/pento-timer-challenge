@@ -23,10 +23,19 @@ const client = new faunadb.Client({
         await client.query(
             q.CreateIndex({
                 name: "users_by_email",
-                permissions: { read: "public" },
                 source: q.Collection("users"),
                 terms: [{ field: ["data", "email"] }],
                 unique: true,
+            })
+        )
+        console.log("Creating trackings collection")
+        await client.query(q.CreateCollection({ name: "trackings" }))
+        console.log("Creating trackings index")
+        await client.query(
+            q.CreateIndex({
+                name: "trackings_by_userRef",
+                source: q.Collection("trackings"),
+                terms: [{ field: ["data", "userRef"] }],
             })
         )
         console.log("Creating admin user")

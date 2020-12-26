@@ -43,7 +43,10 @@ let port = process.env.PORT || 3001
             root: path.join(__dirname, "../../ui/build"),
             wildcard: false,
         })
-        .register(trackingsPlugin, { dbClient: client })
+        .register(trackingsPlugin, {
+            dbClient: client,
+            user: process.env.USERNAME,
+        })
         .register(fastifyBasicAuth, { validate, authenticate: true })
         .after(() => {
             instance.addHook("preHandler", instance.basicAuth)
