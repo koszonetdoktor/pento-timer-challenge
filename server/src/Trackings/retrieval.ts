@@ -15,7 +15,7 @@ export const retrievalHandler = async (
         if (opts.user === undefined) {
             return reply.code(400).send({ error: "User could not be found!" })
         }
-        const response: { data: ResponseData[] } = await opts.dbClient.query(
+        const response: ResponseData[] = await opts.dbClient.query(
             q.Let(
                 {
                     user: q.Get(q.Match(q.Index("users_by_email"), opts.user)),
@@ -60,7 +60,7 @@ export const retrievalHandler = async (
                 )
             )
         )
-        return reply.code(200).send(response.data)
+        return reply.code(200).send(response)
     } catch (err) {
         console.error(err)
         return reply
