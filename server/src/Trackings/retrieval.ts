@@ -1,9 +1,12 @@
 import { FastifyReply, FastifyRequest } from "fastify"
+import { PluginOptions } from "./types"
 
 export const retrievalHandler = async (
     request: FastifyRequest,
-    reply: FastifyReply
+    reply: FastifyReply,
+    opts: PluginOptions
 ): Promise<FastifyReply> => {
+    console.log("header", request.headers)
     console.log("trackings!")
 
     return reply.code(200).send([

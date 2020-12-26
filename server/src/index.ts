@@ -4,6 +4,7 @@ import fastifyStatic from "fastify-static"
 import fastifyBasicAuth from "fastify-basic-auth"
 import { plugin as trackingsPlugin } from "./Trackings/trackings"
 import path from "path"
+import faunadb from "faunadb"
 
 const instance: FastifyInstance = Fastify()
 
@@ -28,15 +29,21 @@ let port = process.env.PORT || 3001
 
 ;(async () => {
     config()
+    if (!process.env.FAUNA_SECRET) {
+        console.log("Required FAUNA_SECRET environment variable not found.")
+        process.exit()
+    }
 
-    //TODO fauna init
+    const client = new faunadb.Client({
+        secret: process.env.FAUNA_SECRET,
+    })
 
     instance
         .register(fastifyStatic, {
             root: path.join(__dirname, "../../ui/build"),
             wildcard: false,
         })
-        .register(trackingsPlugin)
+        .register(trackingsPlugin, { dbClient: client })
         .register(fastifyBasicAuth, { validate, authenticate: true })
         .after(() => {
             instance.addHook("preHandler", instance.basicAuth)

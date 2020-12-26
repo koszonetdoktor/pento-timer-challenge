@@ -1,12 +1,14 @@
 import { FastifyReply, FastifyRequest } from "fastify"
+import { PluginOptions } from "./types"
 
-type FRequest = FastifyRequest<{
+export type FRequest = FastifyRequest<{
     Body: { name: string; duration: number }
 }>
 
 export const creationHandler = async (
     request: FRequest,
-    reply: FastifyReply
+    reply: FastifyReply,
+    opts: PluginOptions
 ): Promise<FastifyReply> => {
     const { name, duration } = request.body
     //TODO save in db
